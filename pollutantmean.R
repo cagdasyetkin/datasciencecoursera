@@ -1,12 +1,21 @@
+## This function will return the mean of the specified pollutant
+## across all monitors (ignoring NA values)
+
 pollutantmean <- function(directory, pollutant, id = 1:332) {
+  # create character vector of filenames based on passed id
+  datafiles <- c()
+  datafiles <- c(datafiles, paste(directory, "/", formatC(id, width=3, flag="0"), ".csv", sep=""))
   
-  files_list <- list.files(directory, full.names = TRUE) #creates a list of files
-  dat <- data.frame() #creates an empty data frame
-  for (i in id) {
-    # loops through the files, rbinding them together
-    dat <- rbind(dat, read.csv(files_list[i]))
-  }
-  dat_subset <- dat[which(dat[, "sulfate"] > 0), ] #subsets the rows that match the .pollutant. argument
-  mean(dat_subset[, "sulfate"], na.rm = TRUE) #identifies the mean weight
-  # while stripping out the NAs
+  # read all files specified above
+  my_data <- lapply(datafiles, read.csv)
+  my_data <- do.call(rbind, my_data)
+  
+  #display sulfate or nitrate mean
+  if (pollutant == colnames(my_data)[2]) {
+    sulfate <- mean(my_data[,2], na.rm = TRUE)
+    return(sulfate)
+  } else {
+    nitrate <- mean(my_data[,3], na.rm = TRUE)
+    return(nitrate) 
+  }       
 }
