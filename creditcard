@@ -1,0 +1,19 @@
+Updated_balance_each_month = 4213
+annualInterestRate = 0.2
+monthlyInterestRate = annualInterestRate / 12
+monthlyPaymentRate = 0.04
+
+Total_paid = 0
+
+for i in range(12):
+    
+    Minimum_monthly_payment = float("{0:.2f}".format((monthlyPaymentRate) * (Updated_balance_each_month)))
+    print "Month: " + str(i+1)
+    print "Minimum monthly payment: " + str(Minimum_monthly_payment)    
+    Monthly_unpaid_balance = (Updated_balance_each_month) - (Minimum_monthly_payment)
+    Updated_balance_each_month = float("{0:.2f}".format((Monthly_unpaid_balance) + (monthlyInterestRate * Monthly_unpaid_balance)))
+    print "Remaining balance: " + str(Updated_balance_each_month)
+    Total_paid += Minimum_monthly_payment
+
+print "Total paid: " + str(Total_paid)
+print "Remaining balance: " + str(Updated_balance_each_month)
