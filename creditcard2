@@ -1,0 +1,25 @@
+balance = 3256
+annualInterestRate = 0.15
+
+
+Updated_balance_each_month = balance
+monthlyInterestRate = annualInterestRate / 12
+
+
+Total_paid = 0
+interest_paid = 0
+
+for i in range(12):
+    
+    Lowest_Payment = float("{0:.2f}".format(interest_paid + (balance/13)))
+    if (Lowest_Payment % 10) < 5 and Lowest_Payment > 0:
+        Lowest_Payment = Lowest_Payment - float("{0:.2f}".format( Lowest_Payment % 10))
+    elif (Lowest_Payment % 10) >= 5:
+        Lowest_Payment = Lowest_Payment + float("{0:.2f}".format( 10 - (Lowest_Payment % 10)))
+          
+    Monthly_unpaid_balance = (Updated_balance_each_month) - (Lowest_Payment)
+    Updated_balance_each_month = float("{0:.2f}".format((Monthly_unpaid_balance) + (monthlyInterestRate * Monthly_unpaid_balance)))
+    interest_paid += (monthlyInterestRate * Lowest_Payment)
+    Total_paid += Lowest_Payment
+
+print "Lowest Payment " + str(int(Lowest_Payment))
