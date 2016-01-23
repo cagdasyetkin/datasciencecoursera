@@ -1,25 +1,24 @@
-balance = 3329
-annualInterestRate = 0.2
+balance =3329
+annualInterestRate  =0.2
 
-Updated_balance_each_month = balance
-monthlyInterestRate = annualInterestRate / 12
+monthInterestRate = annualInterestRate/12
 
-Lowest_Payment = 0
+interest = balance * annualInterestRate
+end_year_balance = interest + balance
 
-for i in range(balance/10):
-    Lowest_Payment += 10
-    print "Lowest payment to check " + str(Lowest_Payment)
-    Total_paid = 0
+Lowest_payment =10
+updated_balance = balance
+
+
+while Lowest_payment*12 < (balance + end_year_balance)/2 :
+    Lowest_payment +=10    
     
-    for j in range(11):
+    for i in range(12):
         
-        print "month" + str(j) + " lowest payment " + str(Lowest_Payment)
-        Monthly_unpaid_balance = (Updated_balance_each_month) - (Lowest_Payment)
-        Updated_balance_each_month = float("{0:.2f}".format((Monthly_unpaid_balance) + (monthlyInterestRate * Monthly_unpaid_balance)))
-        print "Updated_balance_for_month " + str(j) +" "  + str(Updated_balance_each_month)
-        Total_paid += Lowest_Payment
-    
-    end_year_balance = Updated_balance_each_month - Total_paid
-    if end_year_balance < 0:
-        break
-print "minimum fixed monthly payment is " + str(Lowest_Payment)
+        
+        Monthly_Unpaid_Balance = (updated_balance) - (Lowest_payment)
+        Updated_Balance_each_month = (Monthly_Unpaid_Balance) + (monthInterestRate * Monthly_Unpaid_Balance)            
+        
+        
+        
+print "Lowest Payment " + str(Lowest_payment)
