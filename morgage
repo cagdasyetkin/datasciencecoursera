@@ -1,0 +1,106 @@
+def fun(balance,annualIntrestRate):
+    monthlyInterestedRate = annualIntrestRate / 12.0
+    lo = balance /12.0
+    hi = (balance * (1 + monthlyInterestedRate )**12) / 12.0
+    debt = balance
+    fixedPay = (lo + hi)/2
+##    print fixedPay
+    while( lo < (hi-0.001)): # to avoid infinite, define a fixed gap range
+        fixedPay = (lo + hi)/2.0
+##        print fixedPay
+##        print 'lo',lo
+##        print 'hi',hi
+        debt = balance
+        for i in range(12):
+            debt = debt - fixedPay
+            debt = debt * (1 + monthlyInterestedRate)
+        
+        if debt <= 0: # pay off
+                  
+            hi = fixedPay
+           
+        else: # not pay off this time
+
+            lo = fixedPay 
+       
+    print 'Lowest Payment: ' + str('%.2f' %fixedPay)
+
+
+#part 2
+
+annualInterestRate = 0.2
+monthlyPaymentRate = 0.04
+balance = 4213
+
+monthlyInterestRate = annualInterestRate / 12
+
+Total_paid = 0
+
+for i in range(12):
+    
+    Minimum_monthly_payment = float("{0:.2f}".format((monthlyPaymentRate) * (balance)))
+    print "Month: " + str(i+1)
+    print "Minimum monthly payment: " + str(Minimum_monthly_payment)    
+    Monthly_unpaid_balance = (balance) - (Minimum_monthly_payment)
+    balance = float("{0:.2f}".format((Monthly_unpaid_balance) + (monthlyInterestRate * Monthly_unpaid_balance)))
+    print "Remaining balance: " + str(balance)
+    Total_paid += Minimum_monthly_payment
+
+print "Total paid: " + str(Total_paid)
+print "Remaining balance: " + str(balance)
+
+
+#Part 3
+
+annualInterestRate = 0.2
+balance = 3329
+
+monthInterestRate = annualInterestRate/12
+
+interest = balance * annualInterestRate
+end_year_balance = interest + balance
+
+Lowest_payment =10
+updated_balance = balance
+
+
+while Lowest_payment*12 < (balance + end_year_balance)/2 :
+    Lowest_payment +=10    
+    
+    for i in range(12):
+        
+        
+        Monthly_Unpaid_Balance = (updated_balance) - (Lowest_payment)
+        Updated_Balance_each_month = (Monthly_Unpaid_Balance) + (monthInterestRate * Monthly_Unpaid_Balance)  
+print Lowest_payment
+
+#part 4
+
+balance = 320000
+annualInterestRate = 0.2
+
+monthInterestRate = annualInterestRate/12
+accuracy = 0.01
+
+updated_balance = balance
+
+lower_bound = balance / 12
+upper_bound = (balance * (1 + monthInterestRate)**12) / 12
+
+lowest_guess = (lower_bound + upper_bound) / 2
+
+while updated_balance > accuracy:
+    lowest_guess = (lower_bound + upper_bound) / 2
+    
+    for i in range(12):
+        Monthly_Unpaid_Balance = (updated_balance) - (lowest_guess)
+        updated_balance = (Monthly_Unpaid_Balance) + (monthInterestRate * Monthly_Unpaid_Balance)
+        
+    if updated_balance < 0:
+        upper_bound = lowest_guess
+        updated_balance = balance
+    elif updated_balance > accuracy:
+        lower_bound = lowest_guess
+        updated_balance = balance
+        
+print "Lowest Payment: %.2f" %(lowest_guess) 
