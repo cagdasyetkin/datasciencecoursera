@@ -19,7 +19,7 @@ min4carat = diamonds[diamonds$carat >= 4,]
 ggplot() +
   layer(
     data = min4carat, mapping = aes(x=carat,y=price),
-    stat='identity', position="identity", geom="point"
+    stat='identity', position="jitter", geom="point"
   ) +
   scale_x_continuous() +
   scale_y_continuous() +
@@ -69,8 +69,8 @@ qplot(cut,data=diamonds)
 ggplot(diamonds,aes(x="",fill=cut)) + geom_bar(width=1)
 
 # Pie Chart
-ggplot(diamonds,aes(x="",fill=cut)) + geom_bar(width=1) 
-+ coord_polar(theta='y')
+ggplot(diamonds,aes(x="",fill=cut)) + geom_bar(width=1) + 
+  coord_polar(theta='y')
 
 # Faceting
 qplot(carat,price,data=diamonds,geom=c('point','smooth'),
@@ -78,8 +78,7 @@ qplot(carat,price,data=diamonds,geom=c('point','smooth'),
 
 # Colors
 qplot(carat,price,data=diamonds,geom='point', 
-      color=cut, 
-      size=clarity)
+      color=cut)
 
 # Sizes
 qplot(carat,price,data=diamonds[diamonds$carat >= 3,],geom='point', 
@@ -87,7 +86,7 @@ qplot(carat,price,data=diamonds[diamonds$carat >= 3,],geom='point',
       size=cut)
 
 # Show point, jitter, boxplot, violin plot
-qplot(x=cut, y=price, data=diamonds, geom='point')
+qplot(x=cut, y=price, data=diamonds, geom='violin')
 
 
 # Exercises 
@@ -96,12 +95,18 @@ qplot(x=cut, y=price, data=diamonds, geom='point')
 ###########
 
 # - Create a histogram of "carat"
+qplot(carat, data=diamonds)
 
 # - Set the bin width of the histogram to 0.01
+qplot(price, data=diamonds, binwidth=100)
 
 # Make a scatterplot: carat vs price, set the color to clarity
+qplot(carat,price,data=diamonds,geom='point', 
+      color=clarity)
 
 # Make a scatterplot: carat vs price, set the color to clarity. Also add trendline to the plot
+qplot(carat,price,data=diamonds,geom='point', 
+      color=clarity) + geom_point() + geom_smooth()
 
 # Make a scatterplot: carat vs price, 
 # Facet it by clarity.
